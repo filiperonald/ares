@@ -52,16 +52,16 @@ const fetchCemigKwh = createServerFn({ method: "GET" }).handler(async () => {
 
 const WHATSAPP_URL = "https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento.";
 
-// Brand palette
+// Brand palette — aclima
 const C = {
-  cyan: "#087F9A",
-  petrol: "#064E63",
-  deep: "#082F49",
-  light: "#67E8F9",
-  bgLight: "#F4FBFC",
-  bgDark: "#031B24",
-  text: "#102A33",
-  text2: "#5B6B73",
+  cyan: "#0099CC",
+  petrol: "#006E99",
+  deep: "#004D73",
+  light: "#7DD8F5",
+  bgLight: "#F0F9FC",
+  bgDark: "#002A40",
+  text: "#0D2B3E",
+  text2: "#4B6B7D",
 };
 
 function Index() {
@@ -70,7 +70,6 @@ function Index() {
       <Header />
       <main>
         <Hero />
-        <Clients />
         <Services />
         <Problems />
         <Differentiators />
@@ -79,12 +78,32 @@ function Index() {
         <CalculatorSection />
         <Process />
         <Audiences />
+        <Clients />
         <FinalCTA />
       </main>
       <Footer />
       <FloatingWhats />
     </div>
 
+  );
+}
+
+/* ---------------- LOGO ---------------- */
+function AclimaLogo({ height = 40 }: { height?: number }) {
+  const w = Math.round(height * 5.5);
+  return (
+    <svg height={height} viewBox="0 0 220 46" xmlns="http://www.w3.org/2000/svg" aria-label="aclima">
+      <text
+        x="2" y="38"
+        fontFamily="'Arial Rounded MT Bold','Trebuchet MS','Nunito',system-ui,sans-serif"
+        fontWeight="900"
+        fontSize="42"
+        fill={C.cyan}
+        letterSpacing="-1"
+      >aclima</text>
+      <path d="M2 43 Q18 37 34 43" stroke={C.light} strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <circle cx="131" cy="7" r="5" fill={C.light} opacity="0.85" />
+    </svg>
   );
 }
 
@@ -116,21 +135,8 @@ function Header() {
       style={{ background: scrolled ? "rgba(244,251,252,0.85)" : "transparent" }}
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
-        <a href="#inicio" className="flex items-center gap-2 group">
-          <div
-            className="w-9 h-9 rounded-xl grid place-items-center shadow-md"
-            style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
-          >
-            <Wind className="w-5 h-5 text-white" />
-          </div>
-          <div className="leading-tight">
-            <div className="font-bold tracking-tight text-[17px]" style={{ color: C.deep }}>
-              Cnpjotas <span style={{ color: C.cyan }}>Ares</span>
-            </div>
-            <div className="text-[10px] uppercase tracking-[0.18em]" style={{ color: C.text2 }}>
-              Climatização
-            </div>
-          </div>
+        <a href="#inicio" className="flex items-center group" aria-label="aclima">
+          <AclimaLogo height={40} />
         </a>
 
         <nav className="hidden lg:flex items-center gap-8">
@@ -385,29 +391,35 @@ const services = [
 function Services() {
   return (
     <Section id="servicos" eyebrow="O que fazemos" title="Serviços completos em climatização" subtitle="Soluções técnicas para instalar, manter e cuidar do seu ar condicionado com qualidade e tranquilidade.">
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((s, i) => (
           <motion.div
             key={s.title}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: (i % 4) * 0.05 }}
-            className="group relative p-6 rounded-3xl bg-white border transition-all hover:-translate-y-1 hover:shadow-2xl"
-            style={{ borderColor: "rgba(8,127,154,0.12)", boxShadow: "0 4px 18px -10px rgba(8,47,73,0.15)" }}
+            transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+            className="group relative p-8 rounded-3xl bg-white border transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl overflow-hidden"
+            style={{ borderColor: "rgba(0,153,204,0.15)", boxShadow: "0 6px 24px -12px rgba(0,77,115,0.12)" }}
           >
             <div
-              className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity -z-0"
-              style={{ background: `linear-gradient(135deg, ${C.cyan}08, ${C.light}10)` }}
+              className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ background: `linear-gradient(145deg, ${C.cyan}0A, ${C.light}14)` }}
             />
             <div
-              className="relative w-12 h-12 rounded-2xl grid place-items-center mb-4 transition-transform group-hover:scale-110"
+              className="relative w-14 h-14 rounded-2xl grid place-items-center mb-5 shadow-md transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
               style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})`, color: "white" }}
             >
-              <s.icon className="w-5 h-5" />
+              <s.icon className="w-6 h-6" />
             </div>
-            <h3 className="relative font-bold text-lg leading-snug" style={{ color: C.deep }}>{s.title}</h3>
-            <p className="relative mt-2 text-sm leading-relaxed" style={{ color: C.text2 }}>{s.text}</p>
+            <h3 className="relative font-bold text-xl leading-snug mb-3" style={{ color: C.deep }}>{s.title}</h3>
+            <p className="relative text-sm leading-relaxed" style={{ color: C.text2 }}>{s.text}</p>
+            <div
+              className="relative mt-5 inline-flex items-center gap-1.5 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ color: C.cyan }}
+            >
+              Saiba mais <ArrowRight className="w-3.5 h-3.5" />
+            </div>
           </motion.div>
         ))}
       </div>
@@ -677,7 +689,7 @@ function CalculatorSection() {
       <div className="grid lg:grid-cols-5 gap-6">
         {/* Inputs */}
         <div className="lg:col-span-3 p-6 sm:p-8 rounded-3xl bg-white border shadow-[0_10px_40px_-20px_rgba(8,47,73,0.25)]"
-          style={{ borderColor: "rgba(8,127,154,0.15)" }}>
+          style={{ borderColor: "rgba(0,153,204,0.15)", color: C.text }}>
           <Field label="Potência do aparelho (BTUs)">
             <div className="flex flex-wrap gap-2">
               {BTU_OPTIONS.map((o) => (
@@ -1012,11 +1024,8 @@ function Footer() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl grid place-items-center" style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}>
-                <Wind className="w-5 h-5 text-white" />
-              </div>
-              <div className="font-bold text-lg text-white">Cnpjotas <span style={{ color: C.light }}>Ares</span></div>
+            <div className="flex items-center">
+              <AclimaLogo height={36} />
             </div>
             <p className="mt-4 text-sm max-w-md opacity-80">
               Especialistas em climatização: instalação, manutenção preventiva e
@@ -1108,49 +1117,138 @@ function Eyebrow({ children, light = false }: { children: React.ReactNode; light
 
 /* ---------------- CLIENTS ---------------- */
 const clients = [
-  { name: "Vértice Condomínios", tag: "Condomínios" },
-  { name: "Studio Norte", tag: "Arquitetura" },
-  { name: "Café da Praça", tag: "Restaurante" },
-  { name: "Clínica Vitalis", tag: "Saúde" },
-  { name: "Atlas Escritórios", tag: "Corporativo" },
-  { name: "Loja Mar Azul", tag: "Varejo" },
+  {
+    name: "Vértice",
+    tag: "Condomínios",
+    color: "#1D4ED8",
+    logo: (
+      <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="60,4 110,44 10,44" fill="none" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" />
+        <text x="60" y="40" textAnchor="middle" fontFamily="system-ui" fontWeight="800" fontSize="13" fill="currentColor">VÉRTICE</text>
+      </svg>
+    ),
+  },
+  {
+    name: "Studio Norte",
+    tag: "Arquitetura",
+    color: "#7C3AED",
+    logo: (
+      <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="24" r="18" fill="none" stroke="currentColor" strokeWidth="4" />
+        <line x1="40" y1="6" x2="40" y2="42" stroke="currentColor" strokeWidth="3" />
+        <line x1="22" y1="24" x2="58" y2="24" stroke="currentColor" strokeWidth="3" />
+        <text x="68" y="20" fontFamily="system-ui" fontWeight="800" fontSize="11" fill="currentColor">STUDIO</text>
+        <text x="68" y="34" fontFamily="system-ui" fontWeight="800" fontSize="11" fill="currentColor">NORTE</text>
+      </svg>
+    ),
+  },
+  {
+    name: "Café da Praça",
+    tag: "Restaurante",
+    color: "#B45309",
+    logo: (
+      <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+        <rect x="18" y="20" width="28" height="20" rx="4" fill="none" stroke="currentColor" strokeWidth="4" />
+        <path d="M46 26 Q58 26 58 33 Q58 40 46 40" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
+        <path d="M26 20 Q26 12 32 8" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <text x="66" y="20" fontFamily="system-ui" fontWeight="800" fontSize="10" fill="currentColor">CAFÉ DA</text>
+        <text x="66" y="34" fontFamily="system-ui" fontWeight="800" fontSize="10" fill="currentColor">PRAÇA</text>
+      </svg>
+    ),
+  },
+  {
+    name: "Clínica Vitalis",
+    tag: "Saúde",
+    color: "#059669",
+    logo: (
+      <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+        <rect x="26" y="14" width="8" height="22" rx="4" fill="currentColor" />
+        <rect x="16" y="20" width="28" height="8" rx="4" fill="currentColor" />
+        <text x="56" y="20" fontFamily="system-ui" fontWeight="800" fontSize="10" fill="currentColor">CLÍNICA</text>
+        <text x="56" y="34" fontFamily="system-ui" fontWeight="800" fontSize="10" fill="currentColor">VITALIS</text>
+      </svg>
+    ),
+  },
+  {
+    name: "Atlas Corp",
+    tag: "Corporativo",
+    color: "#D97706",
+    logo: (
+      <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="24" r="16" fill="none" stroke="currentColor" strokeWidth="4" />
+        <ellipse cx="30" cy="24" rx="8" ry="16" fill="none" stroke="currentColor" strokeWidth="2.5" />
+        <line x1="14" y1="24" x2="46" y2="24" stroke="currentColor" strokeWidth="2.5" />
+        <text x="56" y="20" fontFamily="system-ui" fontWeight="800" fontSize="12" fill="currentColor">ATLAS</text>
+        <text x="56" y="35" fontFamily="system-ui" fontWeight="800" fontSize="12" fill="currentColor">CORP</text>
+      </svg>
+    ),
+  },
+  {
+    name: "Mar Azul",
+    tag: "Varejo",
+    color: "#0284C7",
+    logo: (
+      <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 30 Q20 18 30 30 Q40 42 50 30" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+        <path d="M10 20 Q20 8 30 20 Q40 32 50 20" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+        <text x="58" y="20" fontFamily="system-ui" fontWeight="800" fontSize="12" fill="currentColor">MAR</text>
+        <text x="58" y="35" fontFamily="system-ui" fontWeight="800" fontSize="12" fill="currentColor">AZUL</text>
+      </svg>
+    ),
+  },
 ];
 
 function Clients() {
   return (
-    <section className="py-14 sm:py-16 border-y" style={{ background: "white", borderColor: "rgba(8,127,154,0.1)" }}>
+    <section className="py-16 sm:py-24 border-t" style={{ background: "white", borderColor: "rgba(0,153,204,0.1)" }}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="text-center mb-8">
-          <div className="text-xs font-bold uppercase tracking-[0.25em]" style={{ color: C.cyan }}>
-            Quem confia em nosso trabalho
-          </div>
-          <h3 className="mt-2 text-xl sm:text-2xl font-bold" style={{ color: C.deep }}>
+        <div className="text-center mb-12">
+          <Eyebrow>Quem confia em nosso trabalho</Eyebrow>
+          <h3 className="mt-3 text-2xl sm:text-3xl font-extrabold" style={{ color: C.deep }}>
             Empresas e ambientes que já atendemos
           </h3>
+          <p className="mt-3 text-sm" style={{ color: C.text2 }}>
+            Passe o mouse sobre cada logo para ver a identidade completa.
+          </p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8">
           {clients.map((c, i) => (
             <motion.div
               key={c.name}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group flex flex-col items-center justify-center text-center p-4 rounded-2xl border transition-all hover:-translate-y-0.5 hover:shadow-md"
-              style={{ borderColor: "rgba(8,127,154,0.12)", background: C.bgLight }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
+              className="group flex flex-col items-center gap-2 cursor-default"
             >
-              <div className="w-10 h-10 rounded-xl grid place-items-center mb-2"
-                style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})`, color: "white" }}>
-                <span className="font-extrabold text-sm">{c.name.split(" ").map((w) => w[0]).slice(0, 2).join("")}</span>
+              <div
+                className="w-full flex items-center justify-center h-16 transition-all duration-300"
+                style={{ color: "#9CA3AF" }}
+              >
+                <div
+                  className="w-full transition-all duration-300 group-hover:scale-105"
+                  style={{
+                    color: "#9CA3AF",
+                    filter: "grayscale(1)",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLDivElement;
+                    el.style.color = c.color;
+                    el.style.filter = "grayscale(0)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLDivElement;
+                    el.style.color = "#9CA3AF";
+                    el.style.filter = "grayscale(1)";
+                  }}
+                >
+                  {c.logo}
+                </div>
               </div>
-              <div className="font-bold text-sm leading-tight" style={{ color: C.deep }}>{c.name}</div>
-              <div className="text-[10px] uppercase tracking-widest mt-1" style={{ color: C.text2 }}>{c.tag}</div>
+              <div className="text-[10px] uppercase tracking-widest font-semibold text-center" style={{ color: C.text2 }}>{c.tag}</div>
             </motion.div>
           ))}
         </div>
-        <p className="text-center text-xs mt-6" style={{ color: C.text2 }}>
-          * Marcas ilustrativas. Substitua pelos logos dos seus clientes reais.
-        </p>
       </div>
     </section>
   );
