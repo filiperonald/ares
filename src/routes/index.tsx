@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Wind, Wrench, Snowflake, ShieldCheck, Sparkles, Cog, Filter, Gauge,
@@ -7,8 +7,10 @@ import {
   Briefcase, Building, FileBadge, ThermometerSun, CheckCircle2, Zap,
   PhoneCall, Mail, MapPin, Menu, X, MessageCircle, ArrowRight,
   AlertTriangle, Droplets, Volume2, Lightbulb, Calculator, Settings,
-  Star, Quote,
+  Star, Quote, ChevronLeft, ChevronRight,
 } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import { createServerFn } from "@tanstack/react-start";
 import heroTechnician from "@/assets/hero-technician.jpg";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
@@ -19,6 +21,34 @@ import work6 from "@/assets/work-6.jpg";
 
 
 export const Route = createFileRoute("/")({ component: Index });
+
+const fetchCemigKwh = createServerFn({ method: "GET" }).handler(async () => {
+  try {
+    const url = new URL("https://dadosabertos.aneel.gov.br/api/3/action/datastore_search");
+    url.searchParams.set("resource_id", "b1bd71e7-d0ad-4214-9053-cbd58e9564a7");
+    url.searchParams.set("filters", JSON.stringify({
+      SigAgente: "CEMIG-D",
+      DscSubGrupoTarifario: "B1",
+      DscModalidadeTarifaria: "Convencional",
+    }));
+    url.searchParams.set("limit", "1");
+    url.searchParams.set("sort", "DatInicioVigencia desc");
+    const res = await fetch(url.toString(), {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) return { kwh: "0.97", source: "fallback" };
+    const json = await res.json() as { result?: { records?: Array<Record<string, string>> } };
+    const rec = json?.result?.records?.[0];
+    if (rec) {
+      const te = parseFloat((rec["VlrTE"] ?? "0").replace(",", "."));
+      const tusd = parseFloat((rec["VlrTUSD"] ?? "0").replace(",", "."));
+      const total = te + tusd;
+      if (total > 0.4 && total < 3.0) return { kwh: total.toFixed(4), source: "aneel" };
+    }
+  } catch { /* fallback */ }
+  return { kwh: "0.97", source: "fallback" };
+});
 
 const WHATSAPP_URL = "https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento.";
 
@@ -304,19 +334,6 @@ function Hero() {
               height={1280}
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0" style={{
-              background: `linear-gradient(180deg, transparent 40%, ${C.deep}cc 100%)`,
-            }} />
-            <div className="absolute left-6 right-6 bottom-6 text-white">
-              <div className="flex items-center gap-1.5 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" style={{ color: C.light }} />
-                ))}
-                <span className="ml-1 text-xs opacity-90">+1.000 atendimentos</span>
-              </div>
-              <div className="text-lg font-bold leading-tight">Equipe técnica especializada</div>
-              <div className="text-sm opacity-80">Atendimento rápido, seguro e com garantia.</div>
-            </div>
           </motion.div>
 
           {/* Floating info cards */}
@@ -593,7 +610,8 @@ function CalculatorSection() {
   const [type, setType] = useState<"conv" | "inv">("conv");
   const [hours, setHours] = useState<string>("8");
   const [days, setDays] = useState<string>("30");
-  const [kwh, setKwh] = useState<string>("0.95");
+  const [kwh, setKwh] = useState<string>("0.97");
+  const [kwhAuto, setKwhAuto] = useState(true);
   const [shown, setShown] = useState(false);
 
   const result = useMemo(() => {
@@ -618,6 +636,12 @@ function CalculatorSection() {
       savings: (costConv - costInv).toFixed(2),
     };
   }, [btu, customKw, type, hours, days, kwh]);
+
+  useEffect(() => {
+    fetchCemigKwh()
+      .then(({ kwh: k }) => { setKwh(k); setKwhAuto(true); })
+      .catch(() => { /* mantém o default */ });
+  }, []);
 
   function handleCalc() {
     setShown(false);
@@ -731,10 +755,16 @@ function CalculatorSection() {
           <Field label="Valor do kWh (R$)">
             <input
               type="text" inputMode="decimal" value={kwh}
-              onChange={(e) => setKwh(e.target.value)}
+              onChange={(e) => { setKwh(e.target.value); setKwhAuto(false); }}
               className="w-full px-4 py-3 rounded-2xl border outline-none focus:ring-2"
               style={{ borderColor: "rgba(8,127,154,0.25)" }}
             />
+            {kwhAuto && (
+              <p className="mt-1.5 text-[11px] flex items-center gap-1.5" style={{ color: C.cyan }}>
+                <span className="w-1.5 h-1.5 rounded-full shrink-0 inline-block" style={{ background: C.cyan }} />
+                Tarifa CEMIG estimada para Belo Horizonte — editável
+              </p>
+            )}
           </Field>
 
           <button
@@ -1137,6 +1167,10 @@ const gallery = [
 ];
 
 function Gallery() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
   return (
     <section id="trabalhos" className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -1161,34 +1195,57 @@ function Gallery() {
           </a>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 auto-rows-[180px] sm:auto-rows-[220px]">
-          {gallery.map((g, i) => (
-            <motion.div
-              key={g.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-              className={`group relative overflow-hidden rounded-3xl shadow-lg ${
-                i === 0 ? "row-span-2 col-span-2 md:col-span-1" : ""
-              } ${i === 3 ? "md:col-span-2" : ""}`}
-            >
-              <img
-                src={g.src}
-                alt={g.title}
-                loading="lazy"
-                width={1024}
-                height={1024}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 transition-opacity"
-                style={{ background: `linear-gradient(180deg, transparent 40%, ${C.deep}e6 100%)` }} />
-              <div className="absolute inset-x-4 bottom-4 text-white">
-                <div className="text-[10px] uppercase tracking-widest opacity-80">{g.tag}</div>
-                <div className="font-bold leading-tight">{g.title}</div>
-              </div>
-            </motion.div>
-          ))}
+        <div className="relative">
+          <div className="overflow-hidden -mx-2" ref={emblaRef}>
+            <div className="flex">
+              {gallery.map((g, i) => (
+                <motion.div
+                  key={g.title}
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.05 }}
+                  className="flex-none w-full sm:w-1/2 lg:w-1/3 px-2"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-lg group">
+                    <img
+                      src={g.src}
+                      alt={g.title}
+                      loading="lazy"
+                      width={1024}
+                      height={768}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{ background: `linear-gradient(180deg, transparent 40%, ${C.deep}e6 100%)` }}
+                    />
+                    <div className="absolute inset-x-4 bottom-4 text-white">
+                      <div className="text-[10px] uppercase tracking-widest opacity-80">{g.tag}</div>
+                      <div className="font-bold leading-tight">{g.title}</div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={scrollPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 sm:-translate-x-4 w-10 h-10 rounded-full grid place-items-center text-white shadow-lg transition-transform hover:scale-110 z-10"
+            style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+            aria-label="Anterior"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={scrollNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 sm:translate-x-4 w-10 h-10 rounded-full grid place-items-center text-white shadow-lg transition-transform hover:scale-110 z-10"
+            style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+            aria-label="Próximo"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>
