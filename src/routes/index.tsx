@@ -7,7 +7,7 @@ import {
   Briefcase, Building, FileBadge, ThermometerSun, CheckCircle2, Zap,
   PhoneCall, Mail, MapPin, Menu, X, MessageCircle, ArrowRight,
   AlertTriangle, Droplets, Volume2, Lightbulb, Calculator, Settings,
-  Star, Quote, ChevronLeft, ChevronRight,
+  Star, Quote, ChevronLeft, ChevronRight, Instagram,
 } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { createServerFn } from "@tanstack/react-start";
@@ -18,6 +18,7 @@ import work3 from "@/assets/work-3.jpg";
 import work4 from "@/assets/work-4.jpg";
 import work5 from "@/assets/work-5.jpg";
 import work6 from "@/assets/work-6.jpg";
+import logoIcon from "@/assets/logo-icon.png";
 
 
 export const Route = createFileRoute("/")({ component: Index });
@@ -50,7 +51,9 @@ const fetchCemigKwh = createServerFn({ method: "GET" }).handler(async () => {
   return { kwh: "0.97", source: "fallback" };
 });
 
-const WHATSAPP_URL = "https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento.";
+const WHATSAPP_URL = "https://wa.me/5531996779318?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento.";
+const INSTAGRAM_URL = "https://instagram.com/aclimasolucoes";
+const EMAIL = "contato@aclima.com.br";
 
 // Brand palette — aclima
 const C = {
@@ -91,18 +94,7 @@ function Index() {
 /* ---------------- LOGO ---------------- */
 function AclimaLogo({ height = 40 }: { height?: number }) {
   return (
-    <svg height={height} viewBox="0 0 220 46" xmlns="http://www.w3.org/2000/svg" aria-label="aclima">
-      <text
-        x="2" y="38"
-        fontFamily="'Arial Rounded MT Bold','Trebuchet MS','Nunito',system-ui,sans-serif"
-        fontWeight="900"
-        fontSize="42"
-        fill={C.cyan}
-        letterSpacing="-1"
-      >aclima</text>
-      <path d="M2 43 Q18 37 34 43" stroke={C.light} strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <circle cx="131" cy="7" r="5" fill={C.light} opacity="0.85" />
-    </svg>
+    <img src={logoIcon} alt="aclima" style={{ height, width: "auto" }} />
   );
 }
 
@@ -921,41 +913,47 @@ function Audiences() {
 /* ---------------- FINAL CTA ---------------- */
 function FinalCTA() {
   return (
-    <section id="contato" className="py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] p-8 sm:p-14 text-white shadow-2xl"
+    <section id="contato" className="py-20 sm:py-28 overflow-x-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-[2.5rem] p-6 sm:p-10 lg:p-14 text-white shadow-2xl"
           style={{ background: C.deep }}>
           <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl" style={{ background: `${C.light}66` }} />
           <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full blur-3xl" style={{ background: `${C.cyan}66` }} />
-          <div className="relative grid lg:grid-cols-2 gap-10 items-center">
+          <div className="relative grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div>
               <Eyebrow light>Vamos conversar</Eyebrow>
-              <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              <h2 className="mt-3 text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
                 Precisa instalar, revisar ou consertar seu ar condicionado?
               </h2>
-              <p className="mt-4 text-base opacity-90 max-w-lg">
-                Fale com a Cnpjotas Ares e receba uma orientação técnica para escolher o melhor caminho.
+              <p className="mt-4 text-sm sm:text-base opacity-90 max-w-lg">
+                Fale com a aclima e receba uma orientação técnica para escolher o melhor caminho.
               </p>
-              <div className="mt-7 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-3">
                 <a
                   href={WHATSAPP_URL} target="_blank" rel="noreferrer"
-                  className="group relative inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold shadow-xl transition-transform hover:-translate-y-0.5 overflow-hidden"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold shadow-xl transition-transform hover:-translate-y-0.5"
                   style={{ background: "white", color: C.deep }}
                 >
                   <MessageCircle className="w-4 h-4" /> Chamar no WhatsApp
                 </a>
                 <a
                   href={WHATSAPP_URL} target="_blank" rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold border-2 border-white/30 hover:bg-white/10 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold border-2 border-white/30 hover:bg-white/10 transition-colors"
                 >
                   Solicitar avaliação <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
             <div className="grid gap-3">
-              <ContactRow icon={<PhoneCall className="w-4 h-4" />} label="WhatsApp" value="(XX) XXXXX-XXXX" />
-              <ContactRow icon={<Mail className="w-4 h-4" />} label="E-mail" value="contato@cnpjotasareas.com.br" />
-              <ContactRow icon={<MapPin className="w-4 h-4" />} label="Região de atendimento" value="Informe sua região para confirmarmos o atendimento" />
+              <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="block hover:opacity-90 transition-opacity">
+                <ContactRow icon={<PhoneCall className="w-4 h-4" />} label="WhatsApp" value="(31) 99677-9318" />
+              </a>
+              <a href={`mailto:${EMAIL}`} className="block hover:opacity-90 transition-opacity">
+                <ContactRow icon={<Mail className="w-4 h-4" />} label="E-mail" value={EMAIL} />
+              </a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="block hover:opacity-90 transition-opacity">
+                <ContactRow icon={<Instagram className="w-4 h-4" />} label="Instagram" value="@aclimasolucoes" />
+              </a>
             </div>
           </div>
         </div>
@@ -966,15 +964,15 @@ function FinalCTA() {
 
 function ContactRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-center gap-4 p-4 rounded-2xl backdrop-blur-md border"
+    <div className="flex items-center gap-3 p-3 sm:p-4 rounded-2xl border"
       style={{ background: "rgba(255,255,255,0.1)", borderColor: "rgba(255,255,255,0.2)" }}>
-      <div className="w-10 h-10 rounded-xl grid place-items-center shrink-0"
+      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl grid place-items-center shrink-0"
         style={{ background: "rgba(255,255,255,0.15)" }}>
         {icon}
       </div>
       <div className="min-w-0">
-        <div className="text-[11px] uppercase tracking-widest opacity-80">{label}</div>
-        <div className="font-semibold truncate">{value}</div>
+        <div className="text-[10px] uppercase tracking-widest opacity-80">{label}</div>
+        <div className="text-sm sm:text-base font-semibold truncate">{value}</div>
       </div>
     </div>
   );
@@ -1007,9 +1005,21 @@ function Footer() {
           <div>
             <div className="text-sm font-bold text-white mb-3">Contato</div>
             <ul className="space-y-2 text-sm opacity-80">
-              <li>(XX) XXXXX-XXXX</li>
-              <li>contato@cnpjotasareas.com.br</li>
-              <li>Atendimento sob agendamento</li>
+              <li>
+                <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="hover:opacity-100 flex items-center gap-2">
+                  <PhoneCall className="w-3.5 h-3.5 shrink-0" /> (31) 99677-9318
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${EMAIL}`} className="hover:opacity-100 flex items-center gap-2">
+                  <Mail className="w-3.5 h-3.5 shrink-0" /> {EMAIL}
+                </a>
+              </li>
+              <li>
+                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="hover:opacity-100 flex items-center gap-2">
+                  <Instagram className="w-3.5 h-3.5 shrink-0" /> @aclimasolucoes
+                </a>
+              </li>
             </ul>
             <a href={WHATSAPP_URL} target="_blank" rel="noreferrer"
               className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-white text-sm font-semibold"
@@ -1020,7 +1030,7 @@ function Footer() {
         </div>
         <div className="mt-12 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-3 text-xs opacity-70"
           style={{ borderColor: "rgba(255,255,255,0.1)" }}>
-          <div>© {new Date().getFullYear()} Cnpjotas Ares. Todos os direitos reservados.</div>
+          <div>© {new Date().getFullYear()} aclima — Cnpjotas Ares. Todos os direitos reservados.</div>
           <div>Climatização • Manutenção • PMOC • Laudo Técnico</div>
         </div>
       </div>
