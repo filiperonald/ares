@@ -90,7 +90,6 @@ function Index() {
 
 /* ---------------- LOGO ---------------- */
 function AclimaLogo({ height = 40 }: { height?: number }) {
-  const w = Math.round(height * 5.5);
   return (
     <svg height={height} viewBox="0 0 220 46" xmlns="http://www.w3.org/2000/svg" aria-label="aclima">
       <text
@@ -158,9 +157,8 @@ function Header() {
             target="_blank"
             rel="noreferrer"
             className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-white text-sm font-semibold shadow-lg shadow-cyan-900/20 transition-transform hover:scale-[1.03] hover:shadow-xl relative overflow-hidden"
-            style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+            style={{ background: C.cyan }}
           >
-            <span className="absolute inset-0 -translate-x-full hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             <MessageCircle className="w-4 h-4" />
             Solicitar orçamento
           </a>
@@ -201,7 +199,7 @@ function Header() {
                 target="_blank"
                 rel="noreferrer"
                 className="mt-2 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white font-semibold"
-                style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+                style={{ background: C.cyan }}
               >
                 <MessageCircle className="w-4 h-4" /> Solicitar orçamento
               </a>
@@ -216,28 +214,7 @@ function Header() {
 /* ---------------- HERO ---------------- */
 function Hero() {
   return (
-    <section id="inicio" className="relative pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden">
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 -z-10">
-        <div
-          className="absolute inset-0 opacity-90"
-          style={{
-            background: `radial-gradient(1200px 600px at 80% -10%, ${C.light}33, transparent 60%), radial-gradient(900px 500px at -10% 30%, ${C.cyan}26, transparent 60%), linear-gradient(180deg, ${C.bgLight}, #ffffff)`,
-          }}
-        />
-        <motion.div
-          className="absolute top-20 right-10 w-72 h-72 rounded-full blur-3xl"
-          style={{ background: `${C.cyan}40` }}
-          animate={{ y: [0, 30, 0], x: [0, -20, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-10 w-80 h-80 rounded-full blur-3xl"
-          style={{ background: `${C.light}40` }}
-          animate={{ y: [0, -25, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+    <section id="inicio" className="relative pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden" style={{ background: C.bgLight }}>
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 items-center">
         <div>
@@ -259,10 +236,7 @@ function Hero() {
             style={{ color: C.deep }}
           >
             Climatização eficiente para sua{" "}
-            <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(120deg, ${C.cyan}, ${C.light})` }}
-            >
+            <span style={{ color: C.cyan }}>
               casa, empresa
             </span>{" "}
             ou condomínio
@@ -291,9 +265,8 @@ function Hero() {
               target="_blank"
               rel="noreferrer"
               className="group relative inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-white font-semibold shadow-xl shadow-cyan-900/20 transition-transform hover:-translate-y-0.5 overflow-hidden"
-              style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+              style={{ background: C.cyan }}
             >
-              <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
               <MessageCircle className="w-4 h-4" /> Solicitar orçamento
             </a>
             <a
@@ -404,11 +377,11 @@ function Services() {
           >
             <div
               className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ background: `linear-gradient(145deg, ${C.cyan}0A, ${C.light}14)` }}
+              style={{ background: `${C.cyan}08` }}
             />
             <div
               className="relative w-14 h-14 rounded-2xl grid place-items-center mb-5 shadow-md transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
-              style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})`, color: "white" }}
+              style={{ background: C.cyan, color: "white" }}
             >
               <s.icon className="w-6 h-6" />
             </div>
@@ -462,7 +435,7 @@ function Problems() {
               target="_blank"
               rel="noreferrer"
               className="mt-7 inline-flex items-center gap-2 px-5 py-3 rounded-full text-white font-semibold shadow-lg"
-              style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+              style={{ background: C.cyan }}
             >
               Falar com um técnico <ArrowRight className="w-4 h-4" />
             </a>
@@ -516,7 +489,7 @@ function Differentiators() {
             className="p-6 rounded-3xl border transition-all hover:-translate-y-1 hover:shadow-xl group"
             style={{
               borderColor: "rgba(8,127,154,0.15)",
-              background: "linear-gradient(180deg, white, rgba(244,251,252,0.6))",
+              background: "white",
             }}
           >
             <div className="w-11 h-11 rounded-2xl grid place-items-center mb-4"
@@ -543,7 +516,7 @@ function PMOC() {
   return (
     <section id="pmoc" className="py-20 sm:py-28 relative overflow-hidden">
       <div className="absolute inset-0 -z-10" style={{
-        background: `linear-gradient(180deg, white, ${C.bgLight})`,
+        background: "white",
       }} />
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-12 gap-10">
@@ -561,7 +534,7 @@ function PMOC() {
             <div className="mt-6 p-5 rounded-3xl border" style={{ borderColor: "rgba(8,127,154,0.2)", background: "white" }}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl grid place-items-center text-white"
-                  style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}>
+                  style={{ background: C.cyan }}>
                   <FileBadge className="w-5 h-5" />
                 </div>
                 <div>
@@ -661,16 +634,7 @@ function CalculatorSection() {
   }
 
   return (
-    <section id="calculadora" className="relative py-20 sm:py-28 overflow-hidden text-white">
-      <div className="absolute inset-0 -z-10" style={{
-        background: `linear-gradient(160deg, ${C.bgDark} 0%, ${C.deep} 45%, ${C.petrol} 100%)`,
-      }} />
-      <div className="absolute -top-32 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl -z-10" style={{ background: `${C.cyan}44` }} />
-      <div className="absolute -bottom-32 -left-20 w-[28rem] h-[28rem] rounded-full blur-3xl -z-10" style={{ background: `${C.light}22` }} />
-      <div className="absolute inset-0 opacity-[0.07] -z-10" style={{
-        backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 1px)",
-        backgroundSize: "32px 32px",
-      }} />
+    <section id="calculadora" className="relative py-20 sm:py-28 overflow-hidden text-white" style={{ background: C.deep }}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="max-w-2xl mb-10 sm:mb-14">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest"
@@ -700,7 +664,7 @@ function CalculatorSection() {
                     btu === o.v ? "text-white shadow-md" : "bg-white hover:bg-cyan-50"
                   }`}
                   style={{
-                    background: btu === o.v ? `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` : undefined,
+                    background: btu === o.v ? C.cyan : undefined,
                     borderColor: btu === o.v ? "transparent" : "rgba(8,127,154,0.2)",
                     color: btu === o.v ? "white" : C.deep,
                   }}
@@ -734,7 +698,7 @@ function CalculatorSection() {
                   onClick={() => setType(o.v as "conv" | "inv")}
                   className="flex-1 px-4 py-3 rounded-2xl text-sm font-semibold border transition-all"
                   style={{
-                    background: type === o.v ? `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` : "white",
+                    background: type === o.v ? C.cyan : "white",
                     color: type === o.v ? "white" : C.deep,
                     borderColor: type === o.v ? "transparent" : "rgba(8,127,154,0.2)",
                   }}
@@ -783,7 +747,7 @@ function CalculatorSection() {
             onClick={handleCalc}
             disabled={!result}
             className="mt-2 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-white font-semibold shadow-lg transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+            style={{ background: C.cyan }}
           >
             <Calculator className="w-4 h-4" /> Calcular estimativa
           </button>
@@ -797,7 +761,7 @@ function CalculatorSection() {
         {/* Result */}
         <div className="lg:col-span-2 flex flex-col gap-4">
           <div className="p-6 rounded-3xl text-white shadow-2xl relative overflow-hidden"
-            style={{ background: `linear-gradient(160deg, ${C.deep}, ${C.petrol})` }}>
+            style={{ background: C.deep }}>
             <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl" style={{ background: `${C.cyan}66` }} />
             <div className="relative">
               <div className="text-xs uppercase tracking-widest opacity-80">Estimativa mensal</div>
@@ -890,7 +854,7 @@ function Process() {
     <Section eyebrow="Como funciona" title="Um processo claro do início ao fim" subtitle="Atendimento simples, transparente e organizado em cada etapa.">
       <div className="relative">
         <div className="hidden md:block absolute left-0 right-0 top-9 h-px"
-          style={{ background: `linear-gradient(90deg, transparent, ${C.cyan}55, transparent)` }} />
+          style={{ background: `${C.cyan}40` }} />
         <div className="grid md:grid-cols-5 gap-5">
           {steps.map((s, i) => (
             <motion.div
@@ -903,7 +867,7 @@ function Process() {
               style={{ borderColor: "rgba(8,127,154,0.15)" }}
             >
               <div className="mx-auto md:mx-0 w-14 h-14 rounded-2xl grid place-items-center text-white font-bold text-lg shadow-lg"
-                style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}>
+                style={{ background: C.cyan }}>
                 {String(i + 1).padStart(2, "0")}
               </div>
               <h3 className="mt-4 font-bold" style={{ color: C.deep }}>{s.t}</h3>
@@ -960,7 +924,7 @@ function FinalCTA() {
     <section id="contato" className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] p-8 sm:p-14 text-white shadow-2xl"
-          style={{ background: `linear-gradient(160deg, ${C.deep}, ${C.petrol} 60%, ${C.cyan})` }}>
+          style={{ background: C.deep }}>
           <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl" style={{ background: `${C.light}66` }} />
           <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full blur-3xl" style={{ background: `${C.cyan}66` }} />
           <div className="relative grid lg:grid-cols-2 gap-10 items-center">
@@ -978,7 +942,6 @@ function FinalCTA() {
                   className="group relative inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold shadow-xl transition-transform hover:-translate-y-0.5 overflow-hidden"
                   style={{ background: "white", color: C.deep }}
                 >
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-cyan-200/50 to-transparent" />
                   <MessageCircle className="w-4 h-4" /> Chamar no WhatsApp
                 </a>
                 <a
@@ -1050,7 +1013,7 @@ function Footer() {
             </ul>
             <a href={WHATSAPP_URL} target="_blank" rel="noreferrer"
               className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-white text-sm font-semibold"
-              style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}>
+              style={{ background: C.cyan }}>
               <MessageCircle className="w-4 h-4" /> WhatsApp
             </a>
           </div>
@@ -1071,7 +1034,7 @@ function FloatingWhats() {
     <a
       href={WHATSAPP_URL} target="_blank" rel="noreferrer"
       className="fixed bottom-5 right-5 z-40 w-14 h-14 rounded-full grid place-items-center text-white shadow-2xl transition-transform hover:scale-110"
-      style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+      style={{ background: C.cyan }}
       aria-label="Falar no WhatsApp"
     >
       <span className="absolute inset-0 rounded-full animate-ping opacity-30" style={{ background: C.cyan }} />
@@ -1287,7 +1250,7 @@ function Gallery() {
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold text-white shadow-lg w-fit"
-            style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+            style={{ background: C.cyan }}
           >
             Quero um serviço assim <ArrowRight className="w-4 h-4" />
           </a>
@@ -1331,7 +1294,7 @@ function Gallery() {
           <button
             onClick={scrollPrev}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 sm:-translate-x-4 w-10 h-10 rounded-full grid place-items-center text-white shadow-lg transition-transform hover:scale-110 z-10"
-            style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+            style={{ background: C.cyan }}
             aria-label="Anterior"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -1339,7 +1302,7 @@ function Gallery() {
           <button
             onClick={scrollNext}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 sm:translate-x-4 w-10 h-10 rounded-full grid place-items-center text-white shadow-lg transition-transform hover:scale-110 z-10"
-            style={{ background: `linear-gradient(135deg, ${C.cyan}, ${C.petrol})` }}
+            style={{ background: C.cyan }}
             aria-label="Próximo"
           >
             <ChevronRight className="w-5 h-5" />
