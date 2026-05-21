@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Wind, Wrench, Snowflake, ShieldCheck, Sparkles, Cog, Filter, Gauge,
@@ -210,16 +210,6 @@ function Hero() {
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 items-center">
         <div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold border"
-            style={{ background: "rgba(8,127,154,0.08)", borderColor: "rgba(8,127,154,0.2)", color: C.petrol }}
-          >
-            <Sparkles className="w-3.5 h-3.5" /> Atendimento técnico especializado
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -300,7 +290,7 @@ function Hero() {
           >
             <img
               src={heroTechnician}
-              alt="Técnico da Cnpjotas Ares ao lado de um ar condicionado instalado"
+              alt="Técnico da Aclima ao lado de um ar condicionado instalado"
               width={1024}
               height={1280}
               className="absolute inset-0 w-full h-full object-cover"
@@ -309,7 +299,7 @@ function Hero() {
 
           {/* Floating info cards */}
           <FloatingCard delay={0.2} className="top-4 -left-4 sm:left-0" icon={<Home className="w-4 h-4" />} title="Residencial & Comercial" />
-          <FloatingCard delay={0.4} className="top-32 -right-4" icon={<FileBadge className="w-4 h-4" />} title="PMOC & Laudo técnico" />
+          <FloatingCard delay={0.4} className="top-32 -right-4" icon={<FileBadge className="w-4 h-4" />} title="PMOC" />
           <FloatingCard delay={0.8} className="bottom-28 -right-2" icon={<ShieldCheck className="w-4 h-4" />} title="Instalação com segurança" />
         </div>
 
@@ -355,7 +345,7 @@ const services = [
 
 function Services() {
   return (
-    <Section id="servicos" eyebrow="O que fazemos" title="Serviços completos em climatização" subtitle="Soluções técnicas para instalar, manter e cuidar do seu ar condicionado com qualidade e tranquilidade.">
+    <Section id="servicos" title="Serviços completos em climatização" subtitle="Soluções técnicas para instalar, manter e cuidar do seu ar condicionado com qualidade e tranquilidade.">
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((s, i) => (
           <motion.div
@@ -415,12 +405,11 @@ function Problems() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Eyebrow>Diagnóstico técnico</Eyebrow>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
               Seu ar condicionado está <span style={{ color: C.cyan }}>gastando mais</span>, gelando menos ou fazendo barulho?
             </h2>
             <p className="mt-4 text-base" style={{ color: C.text2 }}>
-              A Cnpjotas Ares identifica o problema, orienta o cliente e executa o serviço com segurança técnica.
+              A Aclima identifica o problema, orienta o cliente e executa o serviço com segurança técnica.
             </p>
             <a
               href={WHATSAPP_URL}
@@ -460,7 +449,7 @@ function Problems() {
 /* ---------------- DIFFERENTIATORS ---------------- */
 const diffs = [
   { icon: ShieldCheck, t: "Atendimento técnico especializado", d: "Equipe treinada para diagnóstico e execução com total segurança." },
-  { icon: FileBadge, t: "Laudo técnico e suporte PMOC", d: "Documentação clara, padronizada e apoio completo na manutenção registrada." },
+  { icon: FileBadge, t: "PMOC", d: "Documentação clara, padronizada e apoio completo na manutenção registrada." },
   { icon: Gauge, t: "Diagnóstico antes da execução", d: "Você entende o problema e o orçamento antes de qualquer serviço." },
   { icon: Zap, t: "Foco em economia de energia", d: "Orientação prática para reduzir o consumo do seu equipamento." },
   { icon: Building, t: "Para todo tipo de ambiente", d: "Casas, lojas, escritórios, clínicas e condomínios — atendimento sob medida." },
@@ -469,7 +458,7 @@ const diffs = [
 
 function Differentiators() {
   return (
-    <Section id="diferenciais" eyebrow="Por que a Cnpjotas Ares" title="Diferenciais que fazem a diferença" subtitle="Confiança, técnica e clareza em cada atendimento — do orçamento à entrega.">
+    <Section id="diferenciais" title="Diferenciais que fazem a diferença" subtitle="Confiança, técnica e clareza em cada atendimento — do orçamento à entrega.">
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {diffs.map((d, i) => (
           <motion.div
@@ -513,14 +502,13 @@ function PMOC() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
-            <Eyebrow>PMOC & Laudo técnico</Eyebrow>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
-              PMOC e laudo técnico para empresas que precisam manter tudo em dia
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
+              PMOC para empresas que precisam manter tudo em dia
             </h2>
             <p className="mt-4 text-base" style={{ color: C.text2 }}>
               O Plano de Manutenção, Operação e Controle ajuda empresas a manterem
               seus sistemas de climatização seguros, limpos e funcionando de forma
-              adequada. A Cnpjotas Ares pode apoiar na avaliação, manutenção e
+              adequada. A Aclima pode apoiar na avaliação, manutenção e
               entrega da documentação técnica necessária.
             </p>
             <div className="mt-6 p-5 rounded-3xl border" style={{ borderColor: "rgba(8,127,154,0.2)", background: "white" }}>
@@ -530,7 +518,7 @@ function PMOC() {
                   <FileBadge className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-bold" style={{ color: C.deep }}>Precisa de PMOC ou laudo?</div>
+                  <div className="font-bold" style={{ color: C.deep }}>Precisa de PMOC?</div>
                   <div className="text-sm" style={{ color: C.text2 }}>Avaliamos seu cenário sem compromisso.</div>
                 </div>
               </div>
@@ -629,12 +617,7 @@ function CalculatorSection() {
     <section id="calculadora" className="relative py-20 sm:py-28 overflow-hidden text-white" style={{ background: C.deep }}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="max-w-2xl mb-10 sm:mb-14">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest"
-            style={{ background: "rgba(103,232,249,0.15)", color: C.light }}>
-            <span className="w-1.5 h-1.5 rounded-full" style={{ background: C.light }} />
-            Calculadora
-          </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-white">
             Calcule o gasto mensal estimado do seu ar condicionado
           </h2>
           <p className="mt-4 text-base sm:text-lg text-white/75">
@@ -777,29 +760,43 @@ function CalculatorSection() {
           </div>
 
           {result && (
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="p-5 rounded-3xl bg-white border"
-              style={{ borderColor: "rgba(8,127,154,0.15)" }}
-            >
-              <div className="text-xs uppercase tracking-widest font-semibold" style={{ color: C.text2 }}>
-                Convencional × Inverter
-              </div>
-              <div className="mt-3 grid grid-cols-2 gap-3">
-                <div className="p-3 rounded-2xl" style={{ background: C.bgLight }}>
-                  <div className="text-[10px] font-semibold" style={{ color: C.text2 }}>CONVENCIONAL</div>
-                  <div className="text-lg font-bold" style={{ color: C.deep }}>R$ {result.costConv.replace(".", ",")}</div>
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-5 rounded-3xl bg-white border"
+                style={{ borderColor: "rgba(8,127,154,0.15)" }}
+              >
+                <div className="text-xs uppercase tracking-widest font-semibold" style={{ color: C.text2 }}>
+                  Convencional × Inverter
                 </div>
-                <div className="p-3 rounded-2xl text-white" style={{ background: C.cyan }}>
-                  <div className="text-[10px] font-semibold opacity-90">INVERTER</div>
-                  <div className="text-lg font-bold">R$ {result.costInv.replace(".", ",")}</div>
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <div className="p-3 rounded-2xl" style={{ background: C.bgLight }}>
+                    <div className="text-[10px] font-semibold" style={{ color: C.text2 }}>CONVENCIONAL</div>
+                    <div className="text-lg font-bold" style={{ color: C.deep }}>R$ {result.costConv.replace(".", ",")}</div>
+                  </div>
+                  <div className="p-3 rounded-2xl text-white" style={{ background: C.cyan }}>
+                    <div className="text-[10px] font-semibold opacity-90">INVERTER</div>
+                    <div className="text-lg font-bold">R$ {result.costInv.replace(".", ",")}</div>
+                  </div>
                 </div>
-              </div>
-              <div className="mt-3 text-sm" style={{ color: C.text }}>
-                Economia estimada: <span className="font-bold" style={{ color: C.cyan }}>R$ {result.savings.replace(".", ",")}</span>
-              </div>
-            </motion.div>
+                <div className="mt-3 text-sm" style={{ color: C.text }}>
+                  Economia estimada: <span className="font-bold" style={{ color: C.cyan }}>R$ {result.savings.replace(".", ",")}</span>
+                </div>
+              </motion.div>
+              <motion.a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-full text-white font-semibold shadow-lg transition-transform hover:-translate-y-0.5"
+                style={{ background: C.cyan }}
+              >
+                <MessageCircle className="w-4 h-4" /> Quero essa economia
+              </motion.a>
+            </>
           )}
 
           <div className="p-5 rounded-3xl border flex gap-3"
@@ -843,32 +840,63 @@ const steps = [
 
 function Process() {
   return (
-    <Section eyebrow="Como funciona" title="Um processo claro do início ao fim" subtitle="Atendimento simples, transparente e organizado em cada etapa.">
-      <div className="relative">
-        <div className="hidden md:block absolute left-0 right-0 top-9 h-px"
-          style={{ background: `${C.cyan}40` }} />
-        <div className="grid md:grid-cols-5 gap-5">
-          {steps.map((s, i) => (
-            <motion.div
-              key={s.t}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="p-5 rounded-3xl bg-white border text-center md:text-left"
-              style={{ borderColor: "rgba(8,127,154,0.15)" }}
-            >
-              <div className="mx-auto md:mx-0 w-14 h-14 rounded-2xl grid place-items-center text-white font-bold text-lg shadow-lg"
-                style={{ background: C.cyan }}>
-                {String(i + 1).padStart(2, "0")}
-              </div>
-              <h3 className="mt-4 font-bold" style={{ color: C.deep }}>{s.t}</h3>
-              <p className="mt-1 text-sm" style={{ color: C.text2 }}>{s.d}</p>
-            </motion.div>
-          ))}
+    <section className="py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 sm:mb-14">
+          <div className="max-w-xl">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
+              Um processo claro do início ao fim
+            </h2>
+            <p className="mt-4 text-base sm:text-lg" style={{ color: C.text2 }}>
+              Atendimento simples, transparente e organizado em cada etapa.
+            </p>
+          </div>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold border-2 transition-colors hover:bg-white w-fit shrink-0"
+            style={{ borderColor: C.cyan, color: C.petrol, background: "rgba(255,255,255,0.6)" }}
+          >
+            Solicitar atendimento
+          </a>
+        </div>
+
+        <div className="p-4 sm:p-6 rounded-3xl border bg-white" style={{ borderColor: "rgba(8,127,154,0.15)" }}>
+          <div className="flex flex-col md:flex-row">
+            {steps.map((s, i) => (
+              <Fragment key={s.t}>
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="flex-1 p-4 sm:p-5"
+                >
+                  <div
+                    className="text-5xl font-extrabold leading-none mb-3"
+                    style={{
+                      color: "transparent",
+                      WebkitTextStroke: `2px ${C.cyan}`,
+                    }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <h3 className="font-bold" style={{ color: C.deep }}>{s.t}</h3>
+                  <p className="mt-1 text-sm" style={{ color: C.text2 }}>{s.d}</p>
+                </motion.div>
+                {i < steps.length - 1 && (
+                  <div className="hidden md:flex items-center justify-center w-8 shrink-0 self-center"
+                    style={{ color: `${C.cyan}80` }}>
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
+                )}
+              </Fragment>
+            ))}
+          </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -886,7 +914,7 @@ const audiences = [
 
 function Audiences() {
   return (
-    <Section eyebrow="Para quem atendemos" title="Atendimento pensado para cada tipo de ambiente" subtitle="Atendimento pensado para cada tipo de ambiente, considerando conforto térmico, segurança, consumo de energia e rotina de uso.">
+    <Section title="Atendimento pensado para cada tipo de ambiente" subtitle="Soluções de climatização para residências, empresas, escritórios, clínicas e muito mais.">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {audiences.map((a, i) => (
           <motion.div
@@ -921,8 +949,7 @@ function FinalCTA() {
           <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full blur-3xl" style={{ background: `${C.cyan}66` }} />
           <div className="relative grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div>
-              <Eyebrow light>Vamos conversar</Eyebrow>
-              <h2 className="mt-3 text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
                 Precisa instalar, revisar ou consertar seu ar condicionado?
               </h2>
               <p className="mt-4 text-sm sm:text-base opacity-90 max-w-lg">
@@ -1030,8 +1057,8 @@ function Footer() {
         </div>
         <div className="mt-12 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-3 text-xs opacity-70"
           style={{ borderColor: "rgba(255,255,255,0.1)" }}>
-          <div>© {new Date().getFullYear()} aclima — Cnpjotas Ares. Todos os direitos reservados.</div>
-          <div>Climatização • Manutenção • PMOC • Laudo Técnico</div>
+          <div>© {new Date().getFullYear()} Aclima. Todos os direitos reservados.</div>
+          <div>Climatização • Manutenção • PMOC</div>
         </div>
       </div>
     </footer>
@@ -1055,14 +1082,13 @@ function FloatingWhats() {
 
 /* ---------------- SHARED ---------------- */
 function Section({
-  id, eyebrow, title, subtitle, children,
-}: { id?: string; eyebrow: string; title: string; subtitle?: string; children: React.ReactNode }) {
+  id, title, subtitle, children,
+}: { id?: string; title: string; subtitle?: string; children: React.ReactNode }) {
   return (
     <section id={id} className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="max-w-2xl mb-10 sm:mb-14">
-          <Eyebrow>{eyebrow}</Eyebrow>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
             {title}
           </h2>
           {subtitle && <p className="mt-4 text-base sm:text-lg" style={{ color: C.text2 }}>{subtitle}</p>}
@@ -1070,21 +1096,6 @@ function Section({
         {children}
       </div>
     </section>
-  );
-}
-
-function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
-  return (
-    <span
-      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest"
-      style={{
-        background: light ? "rgba(255,255,255,0.15)" : "rgba(8,127,154,0.1)",
-        color: light ? "white" : C.petrol,
-      }}
-    >
-      <span className="w-1.5 h-1.5 rounded-full" style={{ background: light ? "white" : C.cyan }} />
-      {children}
-    </span>
   );
 }
 
@@ -1176,8 +1187,7 @@ function Clients() {
     <section className="py-16 sm:py-24 border-t" style={{ background: "white", borderColor: "rgba(0,153,204,0.1)" }}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="text-center mb-12">
-          <Eyebrow>Quem confia em nosso trabalho</Eyebrow>
-          <h3 className="mt-3 text-2xl sm:text-3xl font-extrabold" style={{ color: C.deep }}>
+          <h3 className="text-2xl sm:text-3xl font-extrabold" style={{ color: C.deep }}>
             Empresas e ambientes que já atendemos
           </h3>
           <p className="mt-3 text-sm" style={{ color: C.text2 }}>
@@ -1247,8 +1257,7 @@ function Gallery() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 sm:mb-14">
           <div className="max-w-2xl">
-            <Eyebrow>Trabalhos realizados</Eyebrow>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: C.deep }}>
               Resultados reais de quem cuida do ar com técnica
             </h2>
             <p className="mt-4 text-base sm:text-lg" style={{ color: C.text2 }}>
@@ -1276,9 +1285,9 @@ function Gallery() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.05 }}
-                  className="flex-none w-full sm:w-1/2 lg:w-1/3 px-2"
+                  className="flex-none w-full sm:w-1/2 px-2"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-lg group">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-lg group">
                     <img
                       src={g.src}
                       alt={g.title}
