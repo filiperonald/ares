@@ -10,7 +10,6 @@ import {
   Star, Quote, ChevronLeft, ChevronRight, Instagram,
 } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import { createServerFn } from "@tanstack/react-start";
 import heroTechnician from "@/assets/hero-technician.jpg";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
@@ -23,7 +22,7 @@ import logoIcon from "@/assets/logo-icon.png";
 
 export const Route = createFileRoute("/")({ component: Index });
 
-const fetchCemigKwh = createServerFn({ method: "GET" }).handler(async () => {
+async function fetchCemigKwh(): Promise<{ kwh: string; source: string }> {
   try {
     const url = new URL("https://dadosabertos.aneel.gov.br/api/3/action/datastore_search");
     url.searchParams.set("resource_id", "b1bd71e7-d0ad-4214-9053-cbd58e9564a7");
@@ -49,7 +48,7 @@ const fetchCemigKwh = createServerFn({ method: "GET" }).handler(async () => {
     }
   } catch { /* fallback */ }
   return { kwh: "0.97", source: "fallback" };
-});
+}
 
 const WHATSAPP_URL = "https://wa.me/5531996779318?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento.";
 const INSTAGRAM_URL = "https://instagram.com/aclimasolucoes";
